@@ -2,15 +2,15 @@
 // root or "wrapper" component that houses all other components
 // must either change this or add a component to make a change to the page
 
-import React, {useState} from "react";
-import './App.css';
-import About from './components/About';
+import React, { useState } from "react";
+import "./App.css";
+import About from "./components/About";
 import Gallery from "./components/Gallery";
-import Nav from './components/Nav'
+import Nav from "./components/Nav";
 import ContactForm from "./components/Contact";
 
 function App() {
-
+  const [contactSelected, setContactSelected] = useState(false);
   const [categories] = useState([
     {
       name: "commercial",
@@ -25,18 +25,24 @@ function App() {
     },
   ]);
 
-  const [currentCategory, setCurrentCategory] = useState(categories[0])
+  const [currentCategory, setCurrentCategory] = useState(categories[0]);
   return (
     <div>
       <Nav
         categories={categories}
         setCurrentCategory={setCurrentCategory}
         currentCategory={currentCategory}
+        setContactSelected={setContactSelected}
       ></Nav>
       <main>
-        <ContactForm></ContactForm>
-        <Gallery currentCategory={currentCategory}></Gallery>
-        <About></About>
+        {!contactSelected ? (
+          <>
+            <Gallery currentCategory={currentCategory}></Gallery>
+            <About></About>
+          </>
+        ) : (
+          <ContactForm></ContactForm>
+        )}
       </main>
     </div>
   );
